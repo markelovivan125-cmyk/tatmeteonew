@@ -1,5 +1,2 @@
 numpy
 pillow
-# опционально (сжатые/тайловые GeoTIFF и нестандартные проекции):
-rasterio
-pyproj
