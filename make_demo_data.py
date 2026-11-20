@@ -6,7 +6,7 @@ import os, sqlite3, math, struct
 from datetime import datetime, timedelta
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = os.path.join(HERE, "demo_data")
+DATA = os.environ.get("RADAR_DEMO_DATA", os.path.join(HERE, "demo_data"))
 W, H = 1400, 1000
 LON0, LON1, LAT0, LAT1 = 30.0, 46.0, 52.0, 60.0
 R = 6378137.0
@@ -175,7 +175,7 @@ def main():
                 "cleanup_time = 120"]
         if hgt: cfg.append("cappi_height = %d" % hgt)
         cfg.append("")
-    open(os.path.join(HERE, "demo.cfg"), "w").write("\n".join(cfg) + STYLES)
+    open(os.environ.get("RADAR_CFG", os.path.join(HERE, "demo.cfg")), "w").write("\n".join(cfg) + STYLES)
     print("Демо-данные готовы:", DATA, "| кадров:", len(frames))
 if __name__ == "__main__":
     main()
