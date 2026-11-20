@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Радар + вертикальный срез — radar-wms-plus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@10.6.0/ol.css">
+<script src="https://cdn.jsdelivr.net/npm/ol@10.6.0/dist/ol.js"></script>
+<style>
+ html,body{margin:0;height:100%;font-family:system-ui,Arial,sans-serif}
+ #bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:6px 8px;background:#1d232b;color:#eee;font-size:13px}
+ #bar select,#bar button{font-size:13px;padding:3px 6px;border-radius:5px;border:1px solid #444;background:#2a323d;color:#eee}
+ #bar button.active{background:#c62828;border-color:#c62828}
+ #bar label{display:flex;gap:4px;align-items:center;white-space:nowrap}
+ #map{position:absolute;top:0;bottom:0;left:0;right:0}
+ #wrap{position:absolute;top:44px;bottom:0;left:0;right:0}
+ #legend{position:absolute;right:8px;top:8px;max-height:70%;overflow:auto;background:#ffffffd9;border-radius:6px;padding:4px;z-index:5}
+ #legend img{display:block;max-width:210px}
+ #section{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:2px solid #c62828;display:none;z-index:6;max-height:52vh;overflow:auto}
+ #section .head{display:flex;justify-content:space-between;align-items:center;padding:4px 10px;font-size:13px;font-weight:600}
+ #section img{display:block;width:100%;cursor:crosshair}
+ #section .err{padding:10px;color:#c62828;font-size:13px}
+ #popup{background:#fff;border-radius:6px;padding:8px 10px;font-size:12px;box-shadow:0 1px 6px #0006;min-width:170px}
+ #popup table td{padding:1px 4px}
+ @media(max-width:640px){#wrap{top:78px}#section{max-height:46vh}}
+</style>
+</head>
+<body>
+<div id="bar">
+  <b>📡 radar-wms-plus</b>
+  <select id="layer" title="Слой"></select>
+  <select id="time" title="Время (UTC)"></select>
+  <button id="play" title="Анимация">▶</button>
+  <select id="speed"><option value="1200">0.8×</option><option value="700" selected>1×</option><option value="350">2×</option></select>
+  <label>👁<input id="opacity" type="range" min="10" max="100" value="70" style="width:70px"></label>
+  <label><input id="follow" type="checkbox" checked>следить</label>
+  <button id="xsec" title="Провести линию A–A' на карте">✂ Вертикальный срез</button>
+  <button id="geotiff" title="Скачать GeoTIFF кадра">⬇ GeoTIFF</button>
+  <button id="legendbtn" title="Легенда">🎨</button>
+  <button id="locate" title="Моё местоположение">◎</button>
+  <span id="status"></span>
+</div>
+<div id="wrap">
+  <div id="map"></div>
+  <div id="legend"><img id="legendimg" alt="легенда"></div>
+  <div id="section">
+    <div class="head"><span id="sectitle">Вертикальный срез</span><button id="secclose">✕ закрыть</button></div>
+    <img id="secimg" alt="срез">
+    <div class="err" id="secerr" style="display:none"></div>
+  </div>
+</div>
+<div id="popup" style="display:none"></div>
+<script src="app.js"></script>
+</body>
+</html>
