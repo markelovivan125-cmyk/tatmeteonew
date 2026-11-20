@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+demo_data/
+demo.cfg
+*.png
+.venv/
+.vercel/
