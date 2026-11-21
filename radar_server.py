@@ -161,7 +161,8 @@ def colorize(vals, pal):
     if pal:
         m = np.isfinite(vals) & (vals > pal[-1][1])
         rgba[m, :3] = pal[-1][2]; rgba[m, 3] = 255
-    return rgba_cache_lock = threading.Lock(); _cache = {"stamp": None, "layers": {}}
+    return rgba
+_cache_lock = threading.Lock(); _cache = {"stamp": None, "layers": {}}
 def _db_stamp():
     st = []
     for p in (DB_PATH, DB_PATH + "-wal"):
@@ -361,7 +362,8 @@ def get_legend(p):
         y = top + k*rh
         dr.rectangle([8, y+2, 36, y+rh-3], fill=rgb+(255,), outline=(120, 120, 120))
         dr.text((44, y+3), label, fill=(0, 0, 0), font=f)
-    return png_bytes(img), "image/png"def xsec_levels():
+    return png_bytes(img), "image/png"
+    def xsec_levels():
     return sorted((float(d["cappi_height"]), n) for n, d in DATASETS.items() if d.get("cappi_height"))
 def line_points(line, step_km):
     pts = [[float(v) for v in s.split(",")] for s in line.split(";") if s.strip()]
